@@ -18,6 +18,13 @@ Server-rendered FastAPI + Jinja2 + HTMX Social Bingo. Game state lives in `app/g
 - `app/templates/`: Jinja fragments, especially `components/game_screen.html` and `components/start_screen.html`
 - `tests/test_api.py`: endpoint and HTMX response validation
 
+## Design guide
+
+- Use dark, Stranger Things-inspired styling through CSS only; avoid changing backend request flow.
+- Keep HTMX attributes intact: `hx-post`, `hx-target="#game-container"`, `hx-swap="outerHTML"`.
+- Favor retro neon red accents, black backgrounds, and glowing text shadows in `app/static/css/app.css`.
+- Update templates by changing classes and structure in `app/templates/components/*`, not by adding client-side JS.
+
 ## Agent notes
 
 - Never use Simple Browser. Run the app and verify with a browser or HTTP request.

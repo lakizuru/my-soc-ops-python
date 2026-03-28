@@ -161,3 +161,53 @@ button:disabled {
 .animate-\[bounce_0\.5s_ease-out\] {
     animation: bounce 0.5s ease-out;
 }
+/* Stranger Things theme overrides */
+body {
+    background: radial-gradient(circle at top left, rgba(220, 38, 38, 0.08), transparent 25%), radial-gradient(circle at 80% 10%, rgba(248, 113, 113, 0.08), transparent 22%), linear-gradient(180deg, #110613 0%, #050205 100%);
+    color: #f8f1f1;
+}
+#app {
+    min-height: 100%;
+    background: linear-gradient(180deg, rgba(14, 6, 19, 0.98), rgba(5, 2, 7, 1));
+}
+.app-shell {
+    min-height: 100vh;
+    background: #050205;
+}
+.bg-black { background-color: #050205; }
+.bg-panel { background: rgba(15, 8, 20, 0.95); }
+.bg-board { background: #120713; }
+.bg-board-marked { background: #3e0f18; }
+.bg-board-win { background: #4f1117; }
+.bg-red-900 { background-color: #2c050e; }
+.border-red-700 { border-color: #991b1b; }
+.border-red-800 { border-color: #7f1d1d; }
+.border-red-900 { border-color: #5b0210; }
+.text-red-100 { color: #fee2e2; }
+.text-red-200 { color: #fecaca; }
+.text-red-300 { color: #fca5a5; }
+.text-red-400 { color: #f87171; }
+.text-red-500 { color: #ef4444; }
+.text-red-600 { color: #dc2626; }
+.bg-black\/75 { background-color: rgba(0, 0, 0, 0.75); }
+.rounded-2xl { border-radius: 1rem; }
+.tracking-widest { letter-spacing: 0.3em; }
+.glow-text {
+    text-shadow: 0 0 8px rgba(248, 113, 113, 0.75), 0 0 30px rgba(244, 63, 94, 0.45);
+}
+.neon-button {
+    background: linear-gradient(90deg, #f43f5e 0%, #be123c 100%);
+    box-shadow: 0 0 24px rgba(244, 63, 94, 0.35);
+}
+.neon-button:hover {
+    filter: brightness(1.05);
+}
+.neon-panel {
+    box-shadow: 0 0 40px rgba(196, 71, 71, 0.15), inset 0 0 2px rgba(255, 255, 255, 0.05);
+}
+.shadow-xl {
+    box-shadow: 0 20px 42px -10px rgba(0, 0, 0, 0.55), 0 6px 12px -8px rgba(255, 0, 46, 0.16);
+}
+button:hover {
+    filter: saturate(1.2);
+}
