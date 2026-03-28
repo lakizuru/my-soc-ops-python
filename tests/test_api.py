@@ -41,6 +41,54 @@ class TestStartGame:
         assert response.text.count('hx-post="/toggle/') == 24  # 24 + 1 free space
 
 
+class TestScavengerHunt:
+    def test_home_includes_scavenger_start_button(self, client: TestClient):
+        response = client.get("/")
+        assert response.status_code == 200
+        assert "Start Scavenger Hunt" in response.text
+        assert 'hx-post="/start-scavenger"' in response.text
+
+    def test_start_scavenger_returns_checklist(self, client: TestClient):
+        client.get("/")
+        response = client.post("/start-scavenger")
+        assert response.status_code == 200
+        assert "Scavenger Hunt" in response.text
+        assert "progress" in response.text.lower()
+        assert "FREE SPACE" not in response.text
+        assert response.text.count('hx-post="/toggle/') == 24
+
+    def test_scavenger_toggle_updates_progress(self, client: TestClient):
+        client.get("/")
+        client.post("/start-scavenger")
+        response = client.post("/toggle/0")
+        assert response.status_code == 200
+        assert "1 / 24" in response.text or "4%" in response.text
+
+
+class TestCardDeckShuffle:
+    def test_home_includes_card_deck_button(self, client: TestClient):
+        response = client.get("/")
+        assert response.status_code == 200
+        assert "Start Card Deck Shuffle" in response.text
+        assert 'hx-post="/start-card-deck"' in response.text
+
+    def test_start_card_deck_returns_card_ui(self, client: TestClient):
+        client.get("/")
+        response = client.post("/start-card-deck")
+        assert response.status_code == 200
+        assert "Card Deck Shuffle" in response.text
+        assert "Draw Another Card" in response.text
+        assert "Cards remaining: 29" in response.text
+
+    def test_draw_card_updates_card(self, client: TestClient):
+        client.get("/")
+        client.post("/start-card-deck")
+        response = client.post("/draw-card")
+        assert response.status_code == 200
+        assert "Card Deck Shuffle" in response.text
+        assert "Draw Another Card" in response.text
+
+
 class TestToggleSquare:
     def test_toggle_marks_square(self, client: TestClient):
         client.get("/")

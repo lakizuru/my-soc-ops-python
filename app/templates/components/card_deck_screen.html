@@ -1,0 +1,42 @@
+<div id="game-container">
+<div class="flex flex-col min-h-full bg-black">
+    <header class="flex items-center justify-between p-3 bg-black border-b border-red-900">
+        <button
+            hx-post="/reset"
+            hx-target="#game-container"
+            hx-swap="outerHTML"
+            class="text-red-300 text-sm px-3 py-1.5 rounded-2xl border border-red-700 hover:bg-red-900 transition-colors">
+            ← Back
+        </button>
+        <h1 class="font-bold text-red-300 tracking-widest">Soc Ops</h1>
+        <div class="w-16"></div>
+    </header>
+
+    <div class="flex-1 flex flex-col items-center justify-center p-6 space-y-6">
+        <div class="bg-panel border border-red-900 rounded-3xl p-8 max-w-xl w-full text-center">
+            <p class="text-xs uppercase tracking-widest text-red-400 mb-2">Card Deck Shuffle</p>
+            <p class="text-sm text-red-200 mb-6">Tap the card to draw a random question from the deck.</p>
+            <div class="card-deck-scene mx-auto">
+                <div class="card-deck-card{% if session.current_card %} card-deck-flipped{% endif %}">
+                    <div class="card-deck-face card-deck-front">
+                        <span class="text-red-200 text-lg font-semibold">Draw a card to begin</span>
+                    </div>
+                    <div class="card-deck-face card-deck-back">
+                        <span class="card-deck-text">{{ session.current_card or 'Draw a card to begin' }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex flex-col gap-3">
+                <button
+                    hx-post="/draw-card"
+                    hx-target="#game-container"
+                    hx-swap="outerHTML"
+                    class="w-full neon-button text-white font-semibold py-3 rounded-2xl">
+                    Draw Another Card
+                </button>
+                <p class="text-xs text-red-400">Cards remaining: {{ session.cards_remaining }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

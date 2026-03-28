@@ -16,8 +16,22 @@
             hx-post="/start"
             hx-target="#game-container"
             hx-swap="outerHTML"
-            class="w-full neon-button text-white font-semibold py-4 px-8 rounded-2xl">
+            class="w-full neon-button text-white font-semibold py-4 px-8 rounded-2xl mb-4">
             Start Game
+        </button>
+        <button
+            hx-post="/start-scavenger"
+            hx-target="#game-container"
+            hx-swap="outerHTML"
+            class="w-full border border-red-700 text-red-200 font-semibold py-4 px-8 rounded-2xl hover:bg-red-950 transition-colors mb-4">
+            Start Scavenger Hunt
+        </button>
+        <button
+            hx-post="/start-card-deck"
+            hx-target="#game-container"
+            hx-swap="outerHTML"
+            class="w-full border border-red-700 text-red-200 font-semibold py-4 px-8 rounded-2xl hover:bg-red-950 transition-colors">
+            Start Card Deck Shuffle
         </button>
     </div>
 </div>

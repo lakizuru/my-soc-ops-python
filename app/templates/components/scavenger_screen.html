@@ -1,0 +1,49 @@
+<div id="game-container">
+<div class="flex flex-col min-h-full bg-black">
+    <!-- Header -->
+    <header class="flex items-center justify-between p-3 bg-black border-b border-red-900">
+        <button
+            hx-post="/reset"
+            hx-target="#game-container"
+            hx-swap="outerHTML"
+            class="text-red-300 text-sm px-3 py-1.5 rounded-2xl border border-red-700 hover:bg-red-900 transition-colors">
+            ← Back
+        </button>
+        <h1 class="font-bold text-red-300 tracking-widest">Soc Ops</h1>
+        <div class="w-16"></div>
+    </header>
+
+    <p class="text-center text-red-200 text-sm py-2 px-4">Tap each item when you find a matching clue.</p>
+
+    <div class="bg-panel border border-red-900 rounded-2xl p-5 m-4 text-red-100">
+        <div class="flex items-center justify-between mb-3">
+            <div>
+                <p class="text-sm uppercase tracking-widest text-red-300">Scavenger Hunt</p>
+                <p class="text-xs text-red-400">Same questions, checklist view</p>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-red-200">Progress</p>
+                <p class="font-semibold">{{ session.completed_count }} / {{ session.total_items }}</p>
+            </div>
+        </div>
+        <div class="w-full h-3 bg-red-950 rounded-full overflow-hidden">
+            <div class="h-full bg-red-500" style="width: {{ ((session.completed_count / session.total_items) * 100) | round }}%;"></div>
+        </div>
+    </div>
+
+    <div class="flex-1 p-3">
+        <div class="max-w-lg mx-auto space-y-2">
+            {% for square in session.board if not square.is_free_space %}
+            <button
+                hx-post="/toggle/{{ square.id }}"
+                hx-target="#game-container"
+                hx-swap="outerHTML"
+                class="w-full flex items-center justify-between gap-3 p-4 border rounded-2xl text-left transition-colors duration-150 bg-board border-red-800 text-red-100 hover:bg-red-950 active:bg-red-900">
+                <span class="flex-1 text-sm leading-tight">{{ square.text }}</span>
+                <span class="text-red-300 text-sm">{% if square.is_marked %}✓{% else %}◻{% endif %}</span>
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>

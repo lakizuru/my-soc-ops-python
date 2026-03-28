@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.game_service import GameSession, get_session
-from app.models import GameState
+from app.models import GameMode, GameState
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -26,6 +26,16 @@ def _get_game_session(request: Request) -> GameSession:
     return get_session(request.session["session_id"])
 
 
+def _render_session(request: Request, session: GameSession) -> Response:
+    if session.mode == GameMode.SCAVENGER:
+        template = "components/scavenger_screen.html"
+    elif session.mode == GameMode.CARD_DECK:
+        template = "components/card_deck_screen.html"
+    else:
+        template = "components/game_screen.html"
+    return templates.TemplateResponse(request, template, {"session": session})
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request) -> Response:
     session = _get_game_session(request)
@@ -40,18 +50,35 @@ async def home(request: Request) -> Response:
 async def start_game(request: Request) -> Response:
     session = _get_game_session(request)
     session.start_game()
-    return templates.TemplateResponse(
-        request, "components/game_screen.html", {"session": session}
-    )
+    return _render_session(request, session)
+
+
+@app.post("/start-scavenger", response_class=HTMLResponse)
+async def start_scavenger(request: Request) -> Response:
+    session = _get_game_session(request)
+    session.start_scavenger()
+    return _render_session(request, session)
+
+
+@app.post("/start-card-deck", response_class=HTMLResponse)
+async def start_card_deck(request: Request) -> Response:
+    session = _get_game_session(request)
+    session.start_card_deck()
+    return _render_session(request, session)
+
+
+@app.post("/draw-card", response_class=HTMLResponse)
+async def draw_card(request: Request) -> Response:
+    session = _get_game_session(request)
+    session.draw_card()
+    return _render_session(request, session)
 
 
 @app.post("/toggle/{square_id}", response_class=HTMLResponse)
 async def toggle_square(request: Request, square_id: int) -> Response:
     session = _get_game_session(request)
     session.handle_square_click(square_id)
-    return templates.TemplateResponse(
-        request, "components/game_screen.html", {"session": session}
-    )
+    return _render_session(request, session)
 
 
 @app.post("/reset", response_class=HTMLResponse)
@@ -69,9 +96,7 @@ async def reset_game(request: Request) -> Response:
 async def dismiss_modal(request: Request) -> Response:
     session = _get_game_session(request)
     session.dismiss_modal()
-    return templates.TemplateResponse(
-        request, "components/game_screen.html", {"session": session}
-    )
+    return _render_session(request, session)
 
 
 def run() -> None:

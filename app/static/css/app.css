@@ -211,3 +211,80 @@ body {
 button:hover {
     filter: saturate(1.2);
 }
+
+.card-deck-scene {
+    perspective: 1200px;
+}
+
+.card-deck-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 4 / 3;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.7s ease-in-out;
+    animation: card-zoom 0.45s ease-out;
+    box-shadow: 0 32px 80px rgba(255, 0, 140, 0.18);
+}
+
+.card-deck-card.card-deck-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-deck-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    backface-visibility: hidden;
+    border: 1px solid rgba(255, 0, 140, 0.18);
+    background: linear-gradient(180deg, rgba(16, 7, 24, 0.96), rgba(18, 8, 33, 0.98));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 0 40px rgba(255, 0, 150, 0.09);
+}
+
+.card-deck-front {
+    background: linear-gradient(180deg, rgba(12, 4, 24, 1), rgba(40, 8, 56, 1));
+}
+
+.card-deck-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(180deg, #29052b 0%, #0e0012 100%);
+}
+
+.card-deck-face::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 0, 180, 0.2), transparent 20%), radial-gradient(circle at 80% 80%, rgba(255, 88, 180, 0.12), transparent 18%);
+    opacity: 0.75;
+}
+
+.card-deck-text {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: #ffe8ef;
+    text-shadow: 0 0 16px rgba(255, 80, 180, 0.35);
+}
+
+.card-deck-face span {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes card-zoom {
+    from {
+        opacity: 0;
+        transform: scale(0.92) rotateY(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+    }
+}
